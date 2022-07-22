@@ -55,11 +55,11 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.id)
+  Movie.findById(req.params._id)
     .then((test) => {
       if (!test) { throw new NotFoundError(); }
       if (test.owner.toString() !== req.user.id) { throw new RightsViolationError(); }
-      Movie.findByIdAndDelete(req.params.id)
+      Movie.findByIdAndDelete(req.params._id)
         .then((movie) => res.status(200).send(movie))
         .catch(() => next(new ServerError('DeleteMovie controller: server error')));
     })

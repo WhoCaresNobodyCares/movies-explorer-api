@@ -7,7 +7,7 @@ const getUser = (req, res, next) => {
   User.findById(req.user.id)
     .then((user) => {
       if (!user) { throw new NotFoundError(); }
-      res.status(200).send(user);
+      res.status(200).send({ email: user.email, name: user.name });
     })
     .catch((error) => {
       if (error.name === 'NotFoundError') {
@@ -23,7 +23,7 @@ function changeUser(req, res, next) {
 
   User.findByIdAndUpdate(req.user.id, { email, name }, { runValidators: true, new: true })
     .then((user) => {
-      res.status(200).send(user);
+      res.status(200).send({ email: user.email, name: user.name });
     })
     .catch((error) => {
       if (error.name === 'ValidationError') {
