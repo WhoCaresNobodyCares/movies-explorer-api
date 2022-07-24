@@ -1,7 +1,15 @@
 const User = require('../models/user').userModel;
+const ConflictError = require('../errors/conflictError');
 const NotFoundError = require('../errors/notFoundError');
 const ServerError = require('../errors/serverError');
 const ValidationError = require('../errors/validationError');
+const {
+  getUserNotFoundMessage,
+  getUserServerMessage,
+  changeUserConflictMessage,
+  changeUserValidationMessage,
+  changeUserServerMessage,
+} = require('../variables/variables');
 
 const getUser = (req, res, next) => {
   User.findById(req.user.id)
@@ -11,10 +19,10 @@ const getUser = (req, res, next) => {
     })
     .catch((error) => {
       if (error.name === 'NotFoundError') {
-        next(new NotFoundError('GetUser controller: user is not found'));
+        next(new NotFoundError(getUserNotFoundMessage));
         return;
       }
-      next(new ServerError('GetUser controller: server error'));
+      next(new ServerError(getUserServerMessage));
     });
 };
 
@@ -26,11 +34,15 @@ function changeUser(req, res, next) {
       res.status(200).send({ email: user.email, name: user.name });
     })
     .catch((error) => {
-      if (error.name === 'ValidationError') {
-        next(new ValidationError('ChangeUser controller: validation error'));
+      if (error.name === 'MongoServerError') {
+        next(new ConflictError(changeUserConflictMessage));
         return;
       }
-      next(new ServerError('ChangeUser controller: server error'));
+      if (error.name === 'ValidationError') {
+        next(new ValidationError(changeUserValidationMessage));
+        return;
+      }
+      next(new ServerError(changeUserServerMessage));
     });
 }
 

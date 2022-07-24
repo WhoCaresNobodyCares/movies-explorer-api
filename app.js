@@ -11,24 +11,25 @@ const authorization = require('./middlewares/auth');
 const NotFoundError = require('./errors/notFoundError');
 const errorHandler = require('./middlewares/errorHandler');
 
+const { DEV_DB_LINK } = require('./config.json');
+
 const { PORT = 3000, DB_LINK, NODE_ENV } = process.env;
 
+express.use(requestLogger);
 express.use(limiter);
 express.use(helmet());
 express.use(bodyParser.json());
 
-mongoose.connect(NODE_ENV === 'production' ? DB_LINK : 'mongodb://localhost:27017/moviesdb', { useNewUrlParser: true, family: 4 })
+mongoose.connect(NODE_ENV === 'production' ? DB_LINK : DEV_DB_LINK, { useNewUrlParser: true, family: 4 })
   .then(() => { express.listen(PORT, () => { console.log(`Connected to moviesdb on port ${PORT}`); }); })
-  .catch((err) => console.log(err));
+  .catch((error) => console.log(error));
 
-express.use(requestLogger);
-
-express.use('/', require('./routes/auth'));
+express.use(require('./routes/auth'));
 
 express.use(authorization);
 
-express.use('/users', require('./routes/user'));
-express.use('/movies', require('./routes/movie'));
+express.use(require('./routes/user'));
+express.use(require('./routes/movie'));
 
 express.use((req, res, next) => next(new NotFoundError('404: not found error')));
 

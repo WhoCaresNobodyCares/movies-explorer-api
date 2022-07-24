@@ -1,0 +1,4 @@
+{
+  "DEV_DB_LINK": "mongodb://localhost:27017/moviesdb",
+  "DEV_JWT_SECRET": "dev-jwt-secret"
+}

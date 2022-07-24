@@ -3,6 +3,14 @@ const ValidationError = require('../errors/validationError');
 const ServerError = require('../errors/serverError');
 const NotFoundError = require('../errors/notFoundError');
 const RightsViolationError = require('../errors/rightsViolationError');
+const {
+  getMoviesServerMessage,
+  createMovieValidationMessage,
+  createMovieServerMessage,
+  deleteMovieServerMessage,
+  deleteMovieNotFoundMessage,
+  deleteMovieRightsViolationMessage,
+} = require('../variables/variables');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user.id })
@@ -10,7 +18,7 @@ const getMovies = (req, res, next) => {
       res.status(200).send(movies);
     })
     .catch(() => {
-      next(new ServerError('GetMovies controller: server error'));
+      next(new ServerError(getMoviesServerMessage));
     });
 };
 
@@ -47,10 +55,10 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(201).send(movie))
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        next(new ValidationError('CreateMovie controller: validation error'));
+        next(new ValidationError(createMovieValidationMessage));
         return;
       }
-      next(new ServerError('CreateMovie controller: server error'));
+      next(new ServerError(createMovieServerMessage));
     });
 };
 
@@ -61,18 +69,18 @@ const deleteMovie = (req, res, next) => {
       if (test.owner.toString() !== req.user.id) { throw new RightsViolationError(); }
       Movie.findByIdAndDelete(req.params._id)
         .then((movie) => res.status(200).send(movie))
-        .catch(() => next(new ServerError('DeleteMovie controller: server error')));
+        .catch(() => next(new ServerError(deleteMovieServerMessage)));
     })
     .catch((error) => {
       if (error.name === 'NotFoundError') {
-        next(new NotFoundError('DeleteMovie controller: the movie is not found'));
+        next(new NotFoundError(deleteMovieNotFoundMessage));
         return;
       }
       if (error.name === 'RightsViolationError') {
-        next(new RightsViolationError('DeleteMovie controller: it is not your movie to delete'));
+        next(new RightsViolationError(deleteMovieRightsViolationMessage));
         return;
       }
-      next(new ServerError('DeleteMovie controller: server error'));
+      next(new ServerError(deleteMovieServerMessage));
     });
 };
 

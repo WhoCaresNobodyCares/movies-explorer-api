@@ -4,8 +4,15 @@ const ConflictError = require('../errors/conflictError');
 const ServerError = require('../errors/serverError');
 const ValidationError = require('../errors/validationError');
 const UnauthorizedError = require('../errors/unauthorizedError');
-
 const User = require('../models/user').userModel;
+const {
+  signupValidationMessage,
+  signupConflictMessage,
+  signupServerMessage,
+  signinUnauthorizedMessage,
+  signinServerMessage,
+} = require('../variables/variables');
+const { DEV_JWT_SECRET } = require('../config.json');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -20,17 +27,17 @@ const signup = (req, res, next) => {
         })
         .catch((error) => {
           if (error.name === 'ValidationError') {
-            next(new ValidationError('Signup controller: validation error'));
+            next(new ValidationError(signupValidationMessage));
             return;
           }
           if (error.name === 'MongoServerError') {
-            next(new ConflictError('Signup controller: this user is already registered'));
+            next(new ConflictError(signupConflictMessage));
             return;
           }
-          next(new ServerError('Signup controller: server error'));
+          next(new ServerError(signupServerMessage));
         });
     })
-    .catch(() => next(new ServerError('Signup controller: server error')));
+    .catch(() => next(new ServerError(signupServerMessage)));
 };
 
 const signin = (req, res, next) => {
@@ -43,15 +50,15 @@ const signin = (req, res, next) => {
     })
     .then(({ match, user }) => {
       if (!match) { throw new UnauthorizedError(); }
-      const token = jwt.sign({ id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' });
+      const token = jwt.sign({ id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : DEV_JWT_SECRET, { expiresIn: '7d' });
       res.status(200).send({ token });
     })
     .catch((error) => {
       if (error.name === 'UnauthorizedError') {
-        next(new UnauthorizedError('Signin controller: wrong email or password'));
+        next(new UnauthorizedError(signinUnauthorizedMessage));
         return;
       }
-      next(new ServerError('Signin controller: server error'));
+      next(new ServerError(signinServerMessage));
     });
 };
 

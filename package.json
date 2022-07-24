@@ -1,7 +1,7 @@
 {
   "name": "movies-explorer-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Yandex praktikum diploma - backend",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/WhoCaresNobodyCares/movies-explorer-api.git"
   },
-  "author": "",
+  "author": "Andrew Dibov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/WhoCaresNobodyCares/movies-explorer-api/issues"

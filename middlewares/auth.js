@@ -1,11 +1,13 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/unauthorizedError');
+const { DEV_JWT_SECRET } = require('../config.json');
+const { authEmptyTokenMessage, authWrongTokenMessage } = require('../variables/variables');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
 const authorization = (req, res, next) => {
   if (!req.headers.authorization) {
-    next(new UnauthorizedError('Auth middleware: empty authorization token'));
+    next(new UnauthorizedError(authEmptyTokenMessage));
     return;
   }
 
@@ -14,9 +16,9 @@ const authorization = (req, res, next) => {
   let payload;
 
   try {
-    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
+    payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : DEV_JWT_SECRET);
   } catch (err) {
-    next(new UnauthorizedError('Auth middleware: wrong authorization token'));
+    next(new UnauthorizedError(authWrongTokenMessage));
   }
 
   req.user = payload;
