@@ -16,16 +16,19 @@ const { DEV_DB_LINK, SUCCESS_MESSAGE, NOT_FOUND_MESSAGE } = require('./config.js
 
 const { PORT = 3001, DB_LINK, NODE_ENV } = process.env;
 
-const allowedCors = [
-  'https://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/',
-  'http://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/',
+// const allowedCors = [
+//   'https://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/',
+//   'http://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/',
 
-];
+// ];
+
+express.use(cors());
+
+// express.use(cors({ origin: allowedCors, credentials: true }));
 
 express.use(requestLogger);
 express.use(limiter);
 express.use(helmet());
-express.use(cors({ origin: allowedCors, credentials: true }));
 express.use(bodyParser.json());
 
 mongoose.connect(NODE_ENV === 'production' ? DB_LINK : DEV_DB_LINK, { useNewUrlParser: true, family: 4 })
