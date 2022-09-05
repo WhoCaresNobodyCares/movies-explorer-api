@@ -14,11 +14,11 @@ const errorHandler = require('./middlewares/errorHandler');
 
 const { DEV_DB_LINK, SUCCESS_MESSAGE, NOT_FOUND_MESSAGE } = require('./config.json');
 
-const { PORT = 3001, DB_LINK, NODE_ENV } = process.env;
+const { PORT = 3000, DB_LINK, NODE_ENV } = process.env;
 
 const allowedCors = [
-  'https://api.andrewdiploma.nomoredomains.xyz',
-  'https://api.andrewdiploma.nomoredomains.xyz.',
+  'https://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs',
+  'http://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs',
 ];
 
 express.use(cors({ origin: allowedCors, credentials: true }));
