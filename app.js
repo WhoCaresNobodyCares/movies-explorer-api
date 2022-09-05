@@ -16,11 +16,11 @@ const { DEV_DB_LINK, SUCCESS_MESSAGE, NOT_FOUND_MESSAGE } = require('./config.js
 
 const { PORT = 3001, DB_LINK, NODE_ENV } = process.env;
 
-express.use(cors({ origin: 'https://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/' }));
 
 express.use(requestLogger);
 express.use(limiter);
 express.use(helmet());
+express.use(cors({ origin: 'https://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/' }));
 express.use(bodyParser.json());
 
 mongoose.connect(NODE_ENV === 'production' ? DB_LINK : DEV_DB_LINK, { useNewUrlParser: true, family: 4 })
