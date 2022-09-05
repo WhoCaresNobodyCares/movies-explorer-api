@@ -5,14 +5,15 @@ const ServerError = require('../errors/serverError');
 const ValidationError = require('../errors/validationError');
 const UnauthorizedError = require('../errors/unauthorizedError');
 const User = require('../models/user').userModel;
+
 const {
-  signupValidationMessage,
-  signupConflictMessage,
-  signupServerMessage,
-  signinUnauthorizedMessage,
-  signinServerMessage,
-} = require('../variables/variables');
-const { DEV_JWT_SECRET } = require('../config.json');
+  DEV_JWT_SECRET,
+  SIGNUP_VALIDATION_MESSAGE,
+  SIGNUP_CONFLICT_MESSAGE,
+  SIGNUP_SERVER_MESSAGE,
+  SIGNIN_UNAUTHORIZED_MESSAGE,
+  SIGNIN_SERVER_MESSAGE,
+} = require('../config.json');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -27,17 +28,17 @@ const signup = (req, res, next) => {
         })
         .catch((error) => {
           if (error.name === 'ValidationError') {
-            next(new ValidationError(signupValidationMessage));
+            next(new ValidationError(SIGNUP_VALIDATION_MESSAGE));
             return;
           }
           if (error.name === 'MongoServerError') {
-            next(new ConflictError(signupConflictMessage));
+            next(new ConflictError(SIGNUP_CONFLICT_MESSAGE));
             return;
           }
-          next(new ServerError(signupServerMessage));
+          next(new ServerError(SIGNUP_SERVER_MESSAGE));
         });
     })
-    .catch(() => next(new ServerError(signupServerMessage)));
+    .catch(() => next(new ServerError(SIGNUP_SERVER_MESSAGE)));
 };
 
 const signin = (req, res, next) => {
@@ -55,10 +56,10 @@ const signin = (req, res, next) => {
     })
     .catch((error) => {
       if (error.name === 'UnauthorizedError') {
-        next(new UnauthorizedError(signinUnauthorizedMessage));
+        next(new UnauthorizedError(SIGNIN_UNAUTHORIZED_MESSAGE));
         return;
       }
-      next(new ServerError(signinServerMessage));
+      next(new ServerError(SIGNIN_SERVER_MESSAGE));
     });
 };
 

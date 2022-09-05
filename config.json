@@ -1,4 +1,33 @@
 {
   "DEV_DB_LINK": "mongodb://localhost:27017/moviesdb",
-  "DEV_JWT_SECRET": "dev-jwt-secret"
+  "DEV_JWT_SECRET": "dev-jwt-secret",
+
+  "SUCCESS_MESSAGE": "Connected to moviesdb on port:",
+  "NOT_FOUND_MESSAGE": "404: not found error",
+
+  "SIGNUP_VALIDATION_MESSAGE": "Signup controller: validation error",
+  "SIGNUP_CONFLICT_MESSAGE": "Signup controller: this user is already registered",
+  "SIGNUP_SERVER_MESSAGE": "Signup controller: server error",
+
+  "SIGNIN_UNAUTHORIZED_MESSAGE": "Signin controller: wrong email or password",
+  "SIGNIN_SERVER_MESSAGE": "Signin controller: server error",
+
+  "GET_MOVIES_SERVER_MESSAGE": "GetMovies controller: server error",
+
+  "CREATE_MOVIE_VALIDATION_MESSAGE": "CreateMovie controller: validation error",
+  "CREATE_MOVIE_SETVER_MESSAGE": "CreateMovie controller: server error",
+
+  "DELETE_MOVIE_SERVER_MESSAGE": "DeleteMovie controller: server error",
+  "DELETE_MOVIE_NOT_FOUND_MESSAGE": "DeleteMovie controller: the movie is not found",
+  "DELETE_MOVIE_RIGHTS_VIOLATION_MESSAGE": "DeleteMovie controller: it is not your movie to delete",
+
+  "GET_USER_NOT_FOUND_MESSAGE": "GetUser controller: user is not found",
+  "GET_USER_SERVER_MESSAGE": "GetUser controller: server error",
+
+  "CHANGE_USER_CONFLICT_MESSAGE": "ChangeUser controller: this email is busy",
+  "CHANGE_USER_VALIDATION_MESSAGE": "ChangeUser controller: validation error",
+  "CHANGE_USER_SERVER_MESSAGE": "ChangeUser controller: server error",
+
+  "AUTH_EMPTY_TOKEN_MESSAGE": "Auth middleware: empty authorization token",
+  "AUTH_WRONG_TOKEN_MESSAGE": "Auth middleware: wrong authorization token"
 }

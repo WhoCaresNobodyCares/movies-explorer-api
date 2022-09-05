@@ -4,13 +4,13 @@ const ServerError = require('../errors/serverError');
 const NotFoundError = require('../errors/notFoundError');
 const RightsViolationError = require('../errors/rightsViolationError');
 const {
-  getMoviesServerMessage,
-  createMovieValidationMessage,
-  createMovieServerMessage,
-  deleteMovieServerMessage,
-  deleteMovieNotFoundMessage,
-  deleteMovieRightsViolationMessage,
-} = require('../variables/variables');
+  GET_MOVIES_SERVER_MESSAGE,
+  CREATE_MOVIE_VALIDATION_MESSAGE,
+  CREATE_MOVIE_SETVER_MESSAGE,
+  DELETE_MOVIE_SERVER_MESSAGE,
+  DELETE_MOVIE_NOT_FOUND_MESSAGE,
+  DELETE_MOVIE_RIGHTS_VIOLATION_MESSAGE,
+} = require('../config.json');
 
 const getMovies = (req, res, next) => {
   Movie.find({ owner: req.user.id })
@@ -18,7 +18,7 @@ const getMovies = (req, res, next) => {
       res.status(200).send(movies);
     })
     .catch(() => {
-      next(new ServerError(getMoviesServerMessage));
+      next(new ServerError(GET_MOVIES_SERVER_MESSAGE));
     });
 };
 
@@ -55,10 +55,10 @@ const createMovie = (req, res, next) => {
     .then((movie) => res.status(201).send(movie))
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        next(new ValidationError(createMovieValidationMessage));
+        next(new ValidationError(CREATE_MOVIE_VALIDATION_MESSAGE));
         return;
       }
-      next(new ServerError(createMovieServerMessage));
+      next(new ServerError(CREATE_MOVIE_SETVER_MESSAGE));
     });
 };
 
@@ -69,18 +69,18 @@ const deleteMovie = (req, res, next) => {
       if (test.owner.toString() !== req.user.id) { throw new RightsViolationError(); }
       Movie.findByIdAndDelete(req.params._id)
         .then((movie) => res.status(200).send(movie))
-        .catch(() => next(new ServerError(deleteMovieServerMessage)));
+        .catch(() => next(new ServerError(DELETE_MOVIE_SERVER_MESSAGE)));
     })
     .catch((error) => {
       if (error.name === 'NotFoundError') {
-        next(new NotFoundError(deleteMovieNotFoundMessage));
+        next(new NotFoundError(DELETE_MOVIE_NOT_FOUND_MESSAGE));
         return;
       }
       if (error.name === 'RightsViolationError') {
-        next(new RightsViolationError(deleteMovieRightsViolationMessage));
+        next(new RightsViolationError(DELETE_MOVIE_RIGHTS_VIOLATION_MESSAGE));
         return;
       }
-      next(new ServerError(deleteMovieServerMessage));
+      next(new ServerError(DELETE_MOVIE_SERVER_MESSAGE));
     });
 };
 

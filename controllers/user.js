@@ -4,12 +4,12 @@ const NotFoundError = require('../errors/notFoundError');
 const ServerError = require('../errors/serverError');
 const ValidationError = require('../errors/validationError');
 const {
-  getUserNotFoundMessage,
-  getUserServerMessage,
-  changeUserConflictMessage,
-  changeUserValidationMessage,
-  changeUserServerMessage,
-} = require('../variables/variables');
+  GET_USER_NOT_FOUND_MESSAGE,
+  GET_USER_SERVER_MESSAGE,
+  CHANGE_USER_CONFLICT_MESSAGE,
+  CHANGE_USER_VALIDATION_MESSAGE,
+  CHANGE_USER_SERVER_MESSAGE,
+} = require('../config.json');
 
 const getUser = (req, res, next) => {
   User.findById(req.user.id)
@@ -19,10 +19,10 @@ const getUser = (req, res, next) => {
     })
     .catch((error) => {
       if (error.name === 'NotFoundError') {
-        next(new NotFoundError(getUserNotFoundMessage));
+        next(new NotFoundError(GET_USER_NOT_FOUND_MESSAGE));
         return;
       }
-      next(new ServerError(getUserServerMessage));
+      next(new ServerError(GET_USER_SERVER_MESSAGE));
     });
 };
 
@@ -35,14 +35,14 @@ function changeUser(req, res, next) {
     })
     .catch((error) => {
       if (error.name === 'MongoServerError') {
-        next(new ConflictError(changeUserConflictMessage));
+        next(new ConflictError(CHANGE_USER_CONFLICT_MESSAGE));
         return;
       }
       if (error.name === 'ValidationError') {
-        next(new ValidationError(changeUserValidationMessage));
+        next(new ValidationError(CHANGE_USER_VALIDATION_MESSAGE));
         return;
       }
-      next(new ServerError(changeUserServerMessage));
+      next(new ServerError(CHANGE_USER_SERVER_MESSAGE));
     });
 }
 
