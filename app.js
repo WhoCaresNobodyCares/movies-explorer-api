@@ -19,6 +19,10 @@ const { PORT = 3001, DB_LINK, NODE_ENV } = process.env;
 const allowedCors = [
   'http://localhost:3000',
   'http://localhost:3001',
+  'http://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs',
+  'https://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs',
+  'http://api.andrewdiploma.nomoredomains.xyz',
+  'https://api.andrewdiploma.nomoredomains.xyz',
 ];
 
 express.use(cors({ origin: allowedCors, credentials: true }));
