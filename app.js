@@ -22,11 +22,10 @@ const allowedCors = [
 
 ];
 
-express.use(cors({ origin: allowedCors, credentials: true }));
-
 express.use(requestLogger);
 express.use(limiter);
 express.use(helmet());
+express.use(cors({ origin: allowedCors, credentials: true }));
 express.use(bodyParser.json());
 
 mongoose.connect(NODE_ENV === 'production' ? DB_LINK : DEV_DB_LINK, { useNewUrlParser: true, family: 4 })
