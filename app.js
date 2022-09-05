@@ -23,7 +23,6 @@ const { PORT = 3001, DB_LINK, NODE_ENV } = process.env;
 // ];
 
 express.use(helmet());
-express.use(cors());
 
 // express.use(cors({ origin: allowedCors, credentials: true }));
 
@@ -32,8 +31,8 @@ express.use(limiter);
 express.use(bodyParser.json());
 
 mongoose.connect(NODE_ENV === 'production' ? DB_LINK : DEV_DB_LINK, { useNewUrlParser: true, family: 4 })
-  .then(() => { express.listen(PORT, () => { console.log(`${SUCCESS_MESSAGE} ${PORT}`); }); })
-  .catch((error) => console.log(error));
+.then(() => { express.listen(PORT, () => { console.log(`${SUCCESS_MESSAGE} ${PORT}`); }); })
+.catch((error) => console.log(error));
 
 express.use(require('./routes/auth'));
 
@@ -41,6 +40,8 @@ express.use(authorization);
 
 express.use(require('./routes/user'));
 express.use(require('./routes/movie'));
+
+express.use(cors());
 
 express.use((req, res, next) => next(new NotFoundError(`${NOT_FOUND_MESSAGE}`)));
 
