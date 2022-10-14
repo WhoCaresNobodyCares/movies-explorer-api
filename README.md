@@ -17,7 +17,7 @@ https://api.andrewdiploma.nomoredomains.xyz -->
 
 ### О проекте
 
-Бэкэнд для сервиса поиска фильмов
+Бэкэнд для [сервиса поиска фильмов](http://andrewdiploma.nomoredomains.xyz.nomoredomains.sbs/)
 
 ### Технологии
 
