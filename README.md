@@ -11,13 +11,13 @@ https://api.andrewdiploma.nomoredomains.xyz -->
 ![Express](https://img.shields.io/badge/-Express-green)
 ![MongoDB](https://img.shields.io/badge/-MongoDB-green)
 
-###### Учебный проект [Яндекс.Практикума](https://practicum.yandex.ru/)
+###### Дипломная работа [Яндекс.Практикума](https://practicum.yandex.ru/)
 
 </div>
 
 ### О проекте
 
-Бэкэнд для сервиса обмена изображениями
+Бэкэнд для сервиса поиска фильмов
 
 ### Технологии
 
@@ -25,7 +25,7 @@ https://api.andrewdiploma.nomoredomains.xyz -->
 
 ### Функционал
 
-- Получить все карточки
+- Получить все фильмы
 - Создать или удалить фильм
 - Сохранить или удалить фильм
 - Получить или изменить информацию о пользователе
