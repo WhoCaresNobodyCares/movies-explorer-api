@@ -47,6 +47,6 @@ $ npm run start
 
 #
 
-[headhunter](https://blagoveschensk.hh.ru/applicant/resumes/view?resume=46964546ff09ac2ced0039ed1f57626e4e6636)
+[headhunter](https://hh.ru/resume/46964546ff09ac2ced0039ed1f57626e4e6636)
 
 </div>
